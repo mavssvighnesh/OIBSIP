@@ -1,0 +1,1 @@
+print("this is the task one of the oasis infobyte internship")

@@ -1,3 +1,3 @@
 THIS FOLDER CONSISTS OF THE WORK DONE FOR THE FIRST TASK BUILDING A SIMPLE BMI CALCULATOR 
 IN A COMMAND LINE INTERFACE USING PYTHON 
-![image]("https://github.com/mavssvighnesh/OIBSIP/blob/main/TASK_1_BMI_CALCULATOR/bmi.png")
+![Image Alt text](/TASK_1_BMI_CALCULATOR/bmi main.jpg "project guidelines"))

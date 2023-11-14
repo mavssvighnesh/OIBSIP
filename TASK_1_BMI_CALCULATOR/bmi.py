@@ -62,4 +62,10 @@ def main():
         else: ##returns the error message if input is not valid 
             print("Invalid input. Please enter valid numeric values for WEIGHT and HEIGHTt.")
 
+# 1.)intially we give wrong inputs to check the code working with the wrong inputs 
+# 2.)we provide the right inputs for the code to give us the result we need 
+# 3.)we finally try to raise an exception with our inputs 
+
 main()
+
+

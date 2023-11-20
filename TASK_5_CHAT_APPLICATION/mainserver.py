@@ -1,43 +1,48 @@
-import socket
-import threading
+import socket #importing socket module to establish the connection using ip 
 
-def handle_client(client_socket, client_address, username):
-    print(f"Accepted connection from {client_address[0]}:{client_address[1]} as {username}")
+import threading #importing the threading module to run multiple clients in multiple threads simultaneously 
+
+#this method handles the clients and prints the messages of them 
+def client_assigner(client_soc,client_ip, username):
+    #print the connection info 
+    print(f"Accepted connection from {client_ip[0]}:{client_ip[1]} as {username}")
 
     while True:
         try:
-            message = client_socket.recv(1024).decode('utf-8')
+            message=client_soc.recv(1024).decode('utf-8')
             if not message:
-                print(f"Connection closed with {client_address[0]}:{client_address[1]}")
+                print(f"Connection closed with {client_ip[0]}:{client_ip[1]}")
                 break
-
+            #prints the username and message of the user 
             print(f"{username}: {message}")
+
             # Broadcast the received message to all clients (except the sender)
             for c in clients:
-                if c != client_socket:
+                if c != client_soc:
                     c.send(f"{username}: {message}".encode('utf-8'))
+        #exception 
         except ConnectionResetError:
             break
+    #closes the connection 
+    client_soc.close()
+    clients.remove(client_soc)
 
-    client_socket.close()
-    clients.remove(client_socket)
-
-def start_server():
-    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_socket.bind(('127.0.0.1', 5555))  # Change the IP address and port as needed
-    server_socket.listen(2)
+def main():
+    server_soc=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server_soc.bind(('127.0.0.1', 5555))  # Change the IP address and port as needed
+    server_soc.listen(2)
     print("Server is listening for incoming connections...")
 
     while True:
-        client, address = server_socket.accept()
+        client, address = server_soc.accept()
         username = client.recv(1024).decode('utf-8')
         clients.append(client)
 
         # Create a thread for each client
-        client_handler = threading.Thread(target=handle_client, args=(client, address, username))
+        client_handler = threading.Thread(target=client_assigner, args=(client, address, username))
         client_handler.start()
 
 clients = []
 
-if __name__ == "__main__":
-    start_server()
+
+main()
